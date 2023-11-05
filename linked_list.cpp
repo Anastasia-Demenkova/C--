@@ -1,24 +1,5 @@
 #include <iostream>
 #include "linked_list.h"
-struct Node{
-    int data;
-    Node *next;
-};
-struct LinkedList{
-    Node *root;
-    void push(int data);
-    int pop();
-};
-struct NodeChar{
-    std::string data;
-    NodeChar *next;
-};
-struct LinkedListOfChar{
-    NodeChar *root;
-    void pushc(std::string data);
-    std::string popc();
-    bool isempty();
-};
 
 void LinkedList::push(int data){
     Node *node;
@@ -74,14 +55,15 @@ int main()
         std::cin>>c;
         if (c == "("){
             llc->pushc(c);   
-        }else if (c == ")"){
+        }
+        else if (c == ")"){
             std::string el;
             while(el != "("){
                 el =llc-> popc();
                 llsum ->pushc(el);
             }
-
-        }else if (c == "+"){
+        }
+        else if ((c == "+") or (c == "-")) {
             std::string el = llc->popc();
             if ((llc->isempty() == true) or (el == "(") ){
                 llc->pushc(el);
@@ -90,48 +72,23 @@ int main()
             else if ((el == "-") or (el == "+") or (el == "*") or (el == "/")){
                 while ((llc->isempty() == true) or (el == "-") or (el == "+") or (el == "*") or (el == "/") ){
                     llsum ->pushc(el);
-                    if (llc->isempty() == false){
+                    if ((llc->isempty()) == false){
                     el = llc->popc();}
                 }
-            std::cout<<"push +"<<std::endl;
-        }else if (c == "-"){
-            std::string el = llc->popc();
-            if ((llc->isempty() == true) or (el == "(") ){
-                llc->pushc(el);
-                llc->pushc(c);}
-            else if ((el == "-") or (el == "+") or (el == "*") or (el == "/")){
-                while ((llc->isempty() == true) or (el == "-") or (el == "+") or (el == "*") or (el == "/") ){
-                    llsum ->pushc(el);
-                    if (llc->isempty() == false){
-                    el = llc->popc();}
-                }
-            }    
-            //std::cout<<"push -"<<std::endl;
-        }else if (c == "*"){
+            }
+        }
+        else if ((c == "*") or (c == "/") ){
             std::string el = llc->popc();
             if ((llc->isempty() == true) or (el == "(") or (el == "+") or (el == "-") ){
                 llc->pushc(el);
-                llc->pushc(c);}
-
-
-           // std::cout<<"push *"<<std::endl;
-        }else if (c == "/"){
-            std::string el = llc->popc();
-            if ((llc->isempty() == true) or (el == "(") or (el == "+") or (el == "-") ){
-                llc->pushc(el);
-                llc->pushc(c);}
-          // std::cout<<"push /"<<std::endl;
-        }else{
+                llc->pushc(c);
+            }
+        }
+        else{
             llsum ->pushc(c);
         }
-    
-
     }
-}
-while (llc->isempty() == false) {
+while ((llc->isempty()) == false) {
     std::cout<<llsum->popc()<<" ";
-
 }
-}   
-
-
+}
